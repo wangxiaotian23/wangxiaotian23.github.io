@@ -55,17 +55,35 @@
   
 
   
+    
+      
+    
 
-  
-
+    
   
 
   
 
   
     
+      
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -102,7 +120,7 @@
 <meta property="og:site_name" content="WANGT21S&#39;BLOG">
 <meta property="og:description" content="在数组中找到第k大的元素  注意事项 你可以交换数组中的元素的位置 您在真实的面试中是否遇到过这个题？ Yes样例123给出数组 [9,3,2,4,8]，第三大的元素是 4给出数组 [1,2,3,4,5]，第一大的元素是 5，第二大的元素是 4，第三大的元素是 3，以此类推 要求时间复杂度为O(n)，空间复杂度为O(1)题目原链接：http://www.lintcode.com/zh-cn/pro">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-07T15:42:00.000Z">
+<meta property="og:updated_time" content="2020-03-28T06:51:21.695Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用快速排序思想找出数组中第k大的元素">
 <meta name="twitter:description" content="在数组中找到第k大的元素  注意事项 你可以交换数组中的元素的位置 您在真实的面试中是否遇到过这个题？ Yes样例123给出数组 [9,3,2,4,8]，第三大的元素是 4给出数组 [1,2,3,4,5]，第一大的元素是 5，第二大的元素是 4，第三大的元素是 3，以此类推 要求时间复杂度为O(n)，空间复杂度为O(1)题目原链接：http://www.lintcode.com/zh-cn/pro">
@@ -344,7 +362,7 @@
 <p> 注意事项</p>
 <p>你可以交换数组中的元素的位置</p>
 <p>您在真实的面试中是否遇到过这个题？ Yes<br>样例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">给出数组 [9,3,2,4,8]，第三大的元素是 4</span><br><span class="line"></span><br><span class="line">给出数组 [1,2,3,4,5]，第一大的元素是 5，第二大的元素是 4，第三大的元素是 3，以此类推</span><br></pre></td></tr></table></figure></p>
-<p>要求时间复杂度为O(n)，空间复杂度为O(1)<br>题目原链接：<br><a href="http://www.lintcode.com/zh-cn/problem/kth-largest-element/" target="_blank" rel="noopener">http://www.lintcode.com/zh-cn/problem/kth-largest-element/</a><br>先说思路：刚开始一直AC失败，因为以为就是一个简单的快排，后来超时了。因为题目要求时间复杂度是o(n),我写的要花o(n*logn)的时间遂找遍各大老司机博客看看有没有更好的办法。下面的代码思路相对要简单一点，就是直接得到每次去掉“一半”的元素，给你找第k大的数，而不是常规的快速排序排好序以后再给你找第k大的数字。所以时间复杂度骤降为o(n).<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">	int partition(vector&lt;int&gt;&amp;a,int low,int high)&#123;</span><br><span class="line">		int first=low;</span><br><span class="line">		int last=high;</span><br><span class="line">		int key=a[first];</span><br><span class="line">		while(first&lt;last)&#123;</span><br><span class="line">			while(a[last]&gt;=key&amp;&amp;first&lt;last)</span><br><span class="line">				--last;</span><br><span class="line">			swap(a[first],a[last]);</span><br><span class="line">			while(a[first]&lt;=key&amp;&amp;first&lt;last)</span><br><span class="line">				++first;</span><br><span class="line">			swap(a[first],a[last]);</span><br><span class="line">		&#125;</span><br><span class="line">		return first;</span><br><span class="line">	&#125;</span><br><span class="line">	int kthLargestElement(vector&lt;int&gt;&amp; a, int low, int high, int k)&#123;</span><br><span class="line">		int p=partition(a,low,high);</span><br><span class="line">		if (k==p-low+1)</span><br><span class="line">		&#123;</span><br><span class="line">			return a[p];</span><br><span class="line">		&#125;</span><br><span class="line">		else if (k - 1 &lt; p - low)</span><br><span class="line">            return kthLargestElement(a,0,p-1,k);</span><br><span class="line">		else</span><br><span class="line">			return kthLargestElement(a,p+1,high,k-p+low-1);</span><br><span class="line">	&#125;</span><br><span class="line">	int kthLargestElement(int k, vector&lt;int&gt;&amp;nums)&#123;</span><br><span class="line">		return kthLargestElement(nums,0,nums.size()-1,k);  </span><br><span class="line">	&#125;	</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>要求时间复杂度为O(n)，空间复杂度为O(1)<br>题目原链接：<br><a href="http://www.lintcode.com/zh-cn/problem/kth-largest-element/" target="_blank" rel="noopener">http://www.lintcode.com/zh-cn/problem/kth-largest-element/</a><br>先说思路：刚开始一直AC失败，因为以为就是一个简单的快排，后来超时了。因为题目要求时间复杂度是o(n),我写的要花o(n*logn)的时间遂找遍各大老司机博客看看有没有更好的办法。下面的代码思路相对要简单一点，就是直接得到每次去掉“一半”的元素，给你找第k大的数，而不是常规的快速排序排好序以后再给你找第k大的数字。所以时间复杂度骤降为o(n).<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">partition</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp;a,<span class="keyword">int</span> low,<span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> first=low;</span><br><span class="line">		<span class="keyword">int</span> last=high;</span><br><span class="line">		<span class="keyword">int</span> key=a[first];</span><br><span class="line">		<span class="keyword">while</span>(first&lt;last)&#123;</span><br><span class="line">			<span class="keyword">while</span>(a[last]&gt;=key&amp;&amp;first&lt;last)</span><br><span class="line">				--last;</span><br><span class="line">			swap(a[first],a[last]);</span><br><span class="line">			<span class="keyword">while</span>(a[first]&lt;=key&amp;&amp;first&lt;last)</span><br><span class="line">				++first;</span><br><span class="line">			swap(a[first],a[last]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> first;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">kthLargestElement</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; a, <span class="keyword">int</span> low, <span class="keyword">int</span> high, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> p=partition(a,low,high);</span><br><span class="line">		<span class="keyword">if</span> (k==p-low+<span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> a[p];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (k - <span class="number">1</span> &lt; p - low)</span><br><span class="line">            <span class="keyword">return</span> kthLargestElement(a,<span class="number">0</span>,p-<span class="number">1</span>,k);</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">return</span> kthLargestElement(a,p+<span class="number">1</span>,high,k-p+low-<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">kthLargestElement</span><span class="params">(<span class="keyword">int</span> k, vector&lt;<span class="keyword">int</span>&gt;&amp;nums)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> kthLargestElement(nums,<span class="number">0</span>,nums.size()-<span class="number">1</span>,k);  </span><br><span class="line">	&#125;	</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -385,8 +403,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/03/28/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
+              <a href="/2020/03/28/three/" rel="prev" title="Word Break">
+                Word Break <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -453,7 +471,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -466,7 +484,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -55,17 +55,35 @@
   
 
   
+    
+      
+    
 
-  
-
+    
   
 
   
 
   
     
+      
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -102,7 +120,7 @@
 <meta property="og:site_name" content="WANGT21S&#39;BLOG">
 <meta property="og:description" content="原题地址 Discuss Pick OneGiven a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionar">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-04T14:52:56.000Z">
+<meta property="og:updated_time" content="2020-03-28T03:55:07.426Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Word Break">
 <meta name="twitter:description" content="原题地址 Discuss Pick OneGiven a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionar">
@@ -346,7 +364,7 @@
 <p>Return true because “leetcode” can be segmented as “leet code”.</p>
 <p>UPDATE (2017/1/4):<br>The wordDict parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.</p>
 <p>先说思路吧：用动态规划求dp做的，当然也可以用深搜dfs做（不过我不怎么会，尴尬）。核心思想就是画表格，一步一步递推，状态转移方程：{ res[j] &amp;&amp; dict.contains(sb.toString())，0=&lt;j&lt;i}。</p>
-<p>AC代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public boolean wordBreak(String s, Set&lt;String&gt; dict) &#123;</span><br><span class="line">        if (s == null || s.length() == 0)</span><br><span class="line">            return true;</span><br><span class="line">        boolean[] res = new boolean[s.length() + 1];//res表示字符串0~i-1的分割情况</span><br><span class="line">        res[0] = true;</span><br><span class="line">        for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">            StringBuilder sb = new StringBuilder(s.substring(0, i + 1));//截取i个长度的字符串</span><br><span class="line">            for (int j = 0; j &lt;= i; j++) &#123;</span><br><span class="line">                if (res[j] &amp;&amp; dict.contains(sb.toString())) &#123;</span><br><span class="line">                    res[i + 1] = true;</span><br><span class="line">                    break;//马上跳出最近的那个for循环</span><br><span class="line">                &#125;</span><br><span class="line">                sb.deleteCharAt(0);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res[s.length()];//如果res中数组元素都为true的时候返回true</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>AC代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">wordBreak</span><span class="params">(String s, Set&lt;String&gt; dict)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s == <span class="keyword">null</span> || s.length() == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">boolean</span>[] res = <span class="keyword">new</span> <span class="keyword">boolean</span>[s.length() + <span class="number">1</span>];<span class="comment">//res表示字符串0~i-1的分割情况</span></span><br><span class="line">        res[<span class="number">0</span>] = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            StringBuilder sb = <span class="keyword">new</span> StringBuilder(s.substring(<span class="number">0</span>, i + <span class="number">1</span>));<span class="comment">//截取i个长度的字符串</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= i; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (res[j] &amp;&amp; dict.contains(sb.toString())) &#123;</span><br><span class="line">                    res[i + <span class="number">1</span>] = <span class="keyword">true</span>;</span><br><span class="line">                    <span class="keyword">break</span>;<span class="comment">//马上跳出最近的那个for循环</span></span><br><span class="line">                &#125;</span><br><span class="line">                sb.deleteCharAt(<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res[s.length()];<span class="comment">//如果res中数组元素都为true的时候返回true</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -377,8 +395,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/28/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2020/03/28/first/" rel="next" title="利用快速排序思想找出数组中第k大的元素">
+                <i class="fa fa-chevron-left"></i> 利用快速排序思想找出数组中第k大的元素
               </a>
             
           </div>
@@ -455,7 +473,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -468,7 +486,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
